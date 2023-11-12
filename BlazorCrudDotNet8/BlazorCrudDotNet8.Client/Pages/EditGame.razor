@@ -1,0 +1,49 @@
+﻿@page "/editGame"
+@page "/editGame/{id:int}"
+@inject IGameService iGameService
+@attribute [RenderModeInteractiveWebAssembly]
+
+
+
+
+<div class="container">
+     <div class="row">
+        <div class="col-4">
+        </div>
+        <div class="col-4">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h1>Create Game</h1>
+                </div>
+                <div class="card-body">
+                    <EditForm Model="game" OnSubmit="Save" FormName="editGame">
+                        <div class="form-group">
+                            <label for="name">Name:</label>
+                            <InputText class="form-control" id="name" @bind-Value="game.Name">@game.Name</InputText>
+                            </div>
+                            <button type="submit" class="btn btn-primary mt-2">Save</button>
+                        </EditForm>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+            </div>
+        </div>
+</div>
+
+
+
+
+
+    @code
+    {
+    [Parameter]
+    public int? Id { get; set; }
+   
+    Game game { get; set; } = new Game { Name = string.Empty };
+
+    async Task Save()
+    {
+        await iGameService.AddGame(game);
+    }
+}
